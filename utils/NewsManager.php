@@ -6,6 +6,7 @@ use Database\class\News;
 use DateTimeImmutable;
 use Exception;
 use PDOException;
+use const Database\ROOT;
 
 class NewsManager
 {
@@ -17,9 +18,9 @@ class NewsManager
      */
     public function __construct()
     {
-        require_once('DB.php');
-        require_once('CommentManager.php');
-        require_once('../class/News.php');
+        require_once(ROOT . "/utils/DB.php");
+        require_once(ROOT . "/utils/CommentManager.php");
+        require_once(ROOT . "/class/News.php");
     }
 
     /**
@@ -42,15 +43,15 @@ class NewsManager
      */
     public function listNews(): array
     {
-        $db = DB::getInstance();
-        $sql_query = "SELECT * FROM news";
-
         try {
+            $db = DB::getInstance();
+            $sql_query = "SELECT * FROM news";
+
             $news = [];
             // Iterate through all the rows returned from the SQL query
             foreach ($db->select($sql_query) as $row) {
                 $new_news = new News();
-                // Create a new News object and set each parameter and then add it in the array
+                // Create a new News object and set each parameter and then add it to the array
                 $news[] = $new_news->setId($row['id'])
                     ->setTitle($row['title'])
                     ->setBody($row['body'])
@@ -65,38 +66,40 @@ class NewsManager
 
     /**
      * Inserts into the Database a News entry with the provided Title and Body.
-     * Returns the changes added in the Database
-     * @param $title
-     * @param $body
+     * Returns the last inserted ID in the Database
+     * @param string $title
+     * @param string $body
      * @return mixed
      * @throws Exception
      */
-    public function addNews($title, $body): mixed
+    public function addNews(string $title, string $body): mixed
     {
         try {
-            $db = DB::getInstance()->pdo;
-            $prepared_query = $db->prepare("INSERT INTO news (title, body, created_at) VALUES (:title, :body, :created_at)");
-            $prepared_query->execute([
+            $db = DB::getInstance();
+            $prepared_query = "INSERT INTO news (title, body, created_at) VALUES (:title, :body, :created_at)";
+            $exec_arg = [
                 ":title" => $title,
                 ":body" => $body,
                 ":created_at" => date('Y-m-d H:i:s', time())
-            ]);
+            ];
+            $db->exec($prepared_query, $exec_arg);
+
         } catch (PDOException $e) {
             throw new Exception("Error when INSERTING a new News entry in the DB!:\t" . $e->getMessage());
         }
 
         print ("The news '$title' was added successfully!\n");
-        return $db->lastInsertId();
+        return $db->getLastInsertId();
     }
 
     /**
      * Deletes the news entry based on the provided ID and also the linked comments.
      * Returns the rowCount (if it was successful or not)
-     * @param $id
+     * @param int $id
      * @return mixed
      * @throws Exception
      */
-    public function deleteNews($id): mixed
+    public function deleteNews(int $id): mixed
     {
         try {
             // Get the list of all the Comments
@@ -116,15 +119,12 @@ class NewsManager
             }
 
             // Delete the News
-            $db = DB::getInstance()->pdo;
-            $prepared_query = $db->prepare("DELETE FROM news WHERE id=:id");
-            $prepared_query->execute([
+            $db = DB::getInstance();
+            $prepared_query = "DELETE FROM news WHERE id=:id";
+            $exec_args = [
                 ":id" => $id
-            ]);
-
-            // Check the rowCount of the DB to see if the news entry was deleted or not
-            // as it is possible that the provided ID does not exist in the DB
-            $deletion_status = $prepared_query->rowCount();
+            ];
+            $deletion_status = $db->exec($prepared_query, $exec_args, true);
 
             // If the rowCount is positive then the news entry was deleted, otherwise there was no news entry to be deleted
             if ($deletion_status) {
@@ -140,16 +140,3 @@ class NewsManager
         }
     }
 }
-
-// The code below was used to verify the functions from this class
-
-//$nm = new NewsManager();
-//$tmp_comments = $nm->listNews();
-//foreach ($tmp_comments as $comment) {
-//    print $comment->getid() . "\t";
-//    print $comment->gettitle() . "\t";
-//    print $comment->getbody() . "\t";
-//    print $comment->getCreatedAt()->format('Y-m-d H:i:s') . "\n";
-//}
-//$nm->addNews("Great Title", "This is the body");
-//$nm->deleteNews(14);
