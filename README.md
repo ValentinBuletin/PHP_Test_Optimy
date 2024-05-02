@@ -24,3 +24,6 @@ This file contains the settings that are commonly used to establish a connection
 * **index.php**:
 This script serves as a demonstration of how to display database data (news and associated comments) using the NewsManager and CommentManager classes. Additionally, it provides testing functions for both managers, allowing for validation of their functionality.
 
+## 3. Changes
+
+Please check *changes.txt* for a list of all the changes.
