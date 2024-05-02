@@ -1,4 +1,14 @@
 To note that I worked in PHP 8.3
+
+Bad practices:
+	There should be more code comments - The more comments the easier it is for the reader to understand the code
+	Missing Try-Catch - It helps maintain application stability and support effective debugging
+	No namespace declaration - Using namespaces allows for cleaner, more maintainable, and more reliable code
+	SQL querries are not prepared - This can lead to SQL injection
+	DB credentials are not secured - Credentials should not be displayed like this, they should be encrypted or at least kept in a separate file with restricted permissions
+	Data and return type missing - If we provide the data and return type it leaves less room for ambiguity and it can serve as an early error detection system
+	DATETIME was of type string - It is better to use a dedicated library such as DateTime instead of string when using any kind of date/time data types
+
 Changes I have made:
 
 global
@@ -24,9 +34,9 @@ global
 /utils/DB.php
 	Added a settings.ini file where the DB credentials are kept. 
 	It is considered best practice to not keep the credentials in the same file with the log-in (in this case DB connection).
-	Modified the exec() function to accept the SQL execute arguments 
-	And to check if anything was deleted by returning rowCount 
+	Modified the exec() function to accept the SQL execute arguments and to check if anything was deleted by returning rowCount 
 	
 /index.php
 	The iteration through the Comments is now more efficient as it returns only the Comments associated to the NewsID
 	Added calls to all the functions from CommentManager and NewManager for easier testing.
+	
