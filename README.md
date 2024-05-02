@@ -26,4 +26,4 @@ This script serves as a demonstration of how to display database data (news and 
 
 ## 3. Changes
 
-Please check *changes.txt* for a list of all the changes.
+Please check *changes.txt* for a list of all the changes and also the bad practices encountered.
