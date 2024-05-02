@@ -1,53 +1,70 @@
 <?php
 
+namespace Database\classes;
+
+use DateTimeImmutable;
+
 class Comment
 {
-	protected $id, $body, $createdAt, $newsId;
+    // Private variables
+    private int $id;
+    private string $body;
+    private DateTimeImmutable $createdAt;
+    private int $newsId;
 
-	public function setId($id)
-	{
-		$this->id = $id;
+    // Sets the ID property of the Comment
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
-	public function setBody($body)
-	{
-		$this->body = $body;
+    // Sets the Body property of the Comment
+    public function setBody(string $body): self
+    {
+        $this->body = $body;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getBody()
-	{
-		return $this->body;
-	}
+    // Sets the CreatedAt property of the Comment
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-	public function setCreatedAt($createdAt)
-	{
-		$this->createdAt = $createdAt;
+        return $this;
+    }
 
-		return $this;
-	}
+    // Sets the NewsID property of the Comment
+    public function setNewsId(int $newsId): self
+    {
+        $this->newsId = $newsId;
 
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
+        return $this;
+    }
 
-	public function getNewsId()
-	{
-		return $this->newsId;
-	}
+    // Gets the ID property of the Comment
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-	public function setNewsId($newsId)
-	{
-		$this->newsId = $newsId;
+    // Gets the Body property of the Comment
+    public function getBody(): string
+    {
+        return $this->body;
+    }
 
-		return $this;
-	}
+    // Gets the CreatedAt property of the Comment
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    // Gets the NewsID property of the Comment
+    public function getNewsId(): int
+    {
+        return $this->newsId;
+    }
 }

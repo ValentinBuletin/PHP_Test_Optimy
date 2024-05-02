@@ -1,54 +1,70 @@
 <?php
 
+namespace Database\classes;
+
+use DateTimeImmutable;
+
 class News
 {
-	protected $id, $title, $body, $createdAt;
+    // Private variables
+    private int $id;
+    private string $title;
+    private string $body;
+    private DateTimeImmutable $createdAt;
 
-	public function setId($id)
-	{
-		$this->id = $id;
+    // Sets the ID property of the News
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    // Sets the Title property of the News
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
-	public function setTitle($title)
-	{
-		$this->title = $title;
+        return $this;
+    }
 
-		return $this;
-	}
+    // Sets the Body property of the News
+    public function setBody(string $body): self
+    {
+        $this->body = $body;
 
-	public function getTitle()
-	{
-		return $this->title;
-	}
+        return $this;
+    }
 
-	public function setBody($body)
-	{
-		$this->body = $body;
+    // Sets the CreatedAt property of the News
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getBody()
-	{
-		return $this->body;
-	}
+    // Gets the ID property of the News
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-	public function setCreatedAt($createdAt)
-	{
-		$this->createdAt = $createdAt;
+    // Gets the Title property of the News
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 
-		return $this;
-	}
+    // Gets the Body property of the News
+    public function getBody(): string
+    {
+        return $this->body;
+    }
 
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
+    // Gets the CreatedAt property of the News
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
 }
