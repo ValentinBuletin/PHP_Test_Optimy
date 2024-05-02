@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\classes;
+namespace Database\class;
 
 use DateTimeImmutable;
 
@@ -12,7 +12,11 @@ class News
     private string $body;
     private DateTimeImmutable $createdAt;
 
-    // Sets the ID property of the News
+    /**
+     * Sets the ID property of the News
+     * @param int $id
+     * @return $this
+     */
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -20,7 +24,11 @@ class News
         return $this;
     }
 
-    // Sets the Title property of the News
+    /**
+     * Sets the Title property of the News
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -28,7 +36,11 @@ class News
         return $this;
     }
 
-    // Sets the Body property of the News
+    /**
+     * Sets the Body property of the News
+     * @param string $body
+     * @return $this
+     */
     public function setBody(string $body): self
     {
         $this->body = $body;
@@ -36,7 +48,11 @@ class News
         return $this;
     }
 
-    // Sets the CreatedAt property of the News
+    /**
+     * Sets the CreatedAt property of the News
+     * @param DateTimeImmutable $createdAt
+     * @return $this
+     */
     public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -44,25 +60,37 @@ class News
         return $this;
     }
 
-    // Gets the ID property of the News
+    /**
+     * Gets the ID property of the News
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    // Gets the Title property of the News
+    /**
+     * Gets the Title property of the News
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    // Gets the Body property of the News
+    /**
+     * Gets the Body property of the News
+     * @return string
+     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    // Gets the CreatedAt property of the News
+    /**
+     * Gets the CreatedAt property of the News
+     * @return DateTimeImmutable
+     */
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;

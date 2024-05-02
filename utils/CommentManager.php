@@ -12,15 +12,20 @@ class CommentManager
     // Private Variables
     private static mixed $instance = null;
 
-    // Constructor validates the required files are present
+    /**
+     * Constructor validates the required files are present
+     */
     public function __construct()
     {
         require_once('DB.php');
         require_once('../class/Comment.php');
     }
 
-    // Singleton instance
-    public static function getInstance()
+    /**
+     * Singleton instance
+     * @return mixed|null
+     */
+    public static function getInstance(): mixed
     {
         if (null === self::$instance) {
             $c = __CLASS__;
@@ -29,7 +34,11 @@ class CommentManager
         return self::$instance;
     }
 
-    // Returns an Array with all the Comments as Objects
+    /**
+     * Returns an Array with all the Comments as Objects
+     * @return array
+     * @throws Exception
+     */
     public function listComments(): array
     {
         $db = DB::getInstance();
@@ -46,16 +55,22 @@ class CommentManager
                     ->setCreatedAt(new DateTimeImmutable($row['created_at']))
                     ->setNewsId($row['news_id']);
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             throw new Exception("Error when SELECTING the list of Comments!:\t" . $e->getMessage());
         }
 
         return $comments;
     }
 
-    // Inserts into the Database a Comment with the provided Body and NewsID and
-    // returns the changes added in the Database
-    public function addComment($body, $newsId)
+    /**
+     * Inserts into the Database a Comment with the provided Body and NewsID and
+     * returns the changes added in the Database
+     * @param $body
+     * @param $newsId
+     * @return mixed
+     * @throws Exception
+     */
+    public function addComment($body, $newsId): mixed
     {
         try {
             $db = DB::getInstance()->pdo;
@@ -73,8 +88,14 @@ class CommentManager
         return $db->lastInsertId();
     }
 
-    // Deletes the comment based on the provided ID and returns the rowCount (if it was successful or not)
-    public function deleteComment($id)
+
+    /**
+     * Deletes the comment based on the provided ID and returns the rowCount (if it was successful or not)
+     * @param $id
+     * @return mixed
+     * @throws Exception
+     */
+    public function deleteComment($id): mixed
     {
         try {
             $db = DB::getInstance()->pdo;
@@ -84,14 +105,14 @@ class CommentManager
             ]);
 
             // Check the rowCount of the DB to see if the comment was deleted or not
-            // as it is possible that the provided that the provided ID does not exist in the DB
+            // as it is possible that the provided ID does not exist in the DB
             $deletion_status = $prepared_query->rowCount();
 
             // If the rowCount is positive then the comment was deleted, otherwise there was no comment to be deleted
             if ($deletion_status) {
                 print ("The comment with ID: $id was deleted successfully\n");
             } else {
-                trigger_error("The comment with ID: $id does not exist in the DB\n", E_USER_WARNING);
+                print("The comment with ID: $id does not exist in the DB!\n");
             }
 
             return $deletion_status;
